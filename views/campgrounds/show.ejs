@@ -27,5 +27,33 @@
       </div>
       <div class="card-footer text-muted">2 days ago</div>
     </div>
+    <h2>Leave a Review</h2>
+    <form class="mb-3">
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <input
+          type="range"
+          class="form-range"
+          min="0"
+          max="5"
+          id="rating"
+          name="review[rating]"
+        />
+      </div>
+      <div class="mb-3 form-floating">
+        <textarea
+          class="form-control"
+          id="body"
+          name="campground[body]"
+          placeholder="Review"
+          style="height: 100px"
+          required
+        ></textarea>
+        <label class="form-label" for="body">Review</label>
+      </div>
+      <button class="btn text-white" style="background-color: #3d0a91">
+        Submit
+      </button>
+    </form>
   </div>
 </div>
