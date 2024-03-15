@@ -17,7 +17,10 @@
         <p class="card-text">
           <small class="text-muted"><%= campground.location %></small>
         </p>
-        <a class="btn btn-secondary" href="/campgrounds/<%= campground._id %>">
+        <a
+          class="btn btn-outline-secondary"
+          href="/campgrounds/<%= campground._id %>"
+        >
           View <%= campground.title %>
         </a>
       </div>
