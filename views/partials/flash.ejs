@@ -1,0 +1,28 @@
+<% if (success && success.length) { %>
+<div
+  class="alert alert-dismissible fade show text-white text-center"
+  role="alert"
+  style="background-color: #3d0a91"
+>
+  <%= success %>
+  <button
+    type="button"
+    class="btn-close btn-close-white"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<% } %> <% if (error && error.length) { %>
+<div
+  class="alert alert-danger alert-dismissible fade show text-center"
+  role="alert"
+>
+  <%= error %>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<% } %>
