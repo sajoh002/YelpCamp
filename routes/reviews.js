@@ -3,7 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const Campground = require("../models/campground");
 const Review = require("../models/review");
-const { reviewSchema } = require("../schemas.js");
+const { reviewSchema } = require("../schemas");
 
 const router = express.Router({ mergeParams: true });
 
