@@ -7,6 +7,7 @@
       method="POST"
       novalidate
       class="needs-validation"
+      enctype="multipart/form-data"
     >
       <div class="my-3 form-floating">
         <input
@@ -32,17 +33,15 @@
         />
         <label class="form-label" for="location">Location</label>
       </div>
-      <div class="mb-3 form-floating">
+      <div class="mb-3 input-group">
+        <label class="input-group-text" for="image">Upload Image(s)</label>
         <input
-          type="text"
-          class="form-control"
+          type="file"
+          name="image"
           id="image"
-          name="campground[image]"
-          placeholder="Image"
-          value="<%= campground.image %>"
-          required
+          class="form-control"
+          multiple
         />
-        <label class="form-label" for="image">Image URL</label>
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text">$</span>
