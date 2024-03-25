@@ -34,7 +34,7 @@
         <label class="form-label" for="location">Location</label>
       </div>
       <div class="mb-3 input-group">
-        <label class="input-group-text" for="image">Upload Image(s)</label>
+        <label class="input-group-text" for="image">Add Image(s)</label>
         <input
           type="file"
           name="image"
@@ -73,7 +73,21 @@
         </textarea>
         <label class="form-label" for="description">Description</label>
       </div>
-
+      <div class="mb-3">
+        <% campground.images.forEach((img, i) => { %>
+        <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="" />
+        <div class="form-check-inline mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="<%= img.filename %>"
+            id="image-<%= i %>"
+            name="deleteImages[]"
+          />
+          <label class="form-check-label" for="image-<%= i %>"> Delete? </label>
+        </div>
+        <% }) %>
+      </div>
       <div class="mb-3">
         <button class="btn text-white" style="background-color: #3d0a91">
           Save Campground
