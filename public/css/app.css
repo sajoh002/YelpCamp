@@ -7,3 +7,13 @@
 .btn-outline-primary:hover {
   background-color: #3d0a91;
 }
+
+#cluster-map {
+  width: 100%;
+  height: 500px;
+}
+
+#map {
+  width: 100%;
+  height: 300px;
+}
