@@ -29,3 +29,11 @@ body {
   color: white;
   border-bottom-color: white;
 }
+
+.btn {
+  background-color: #3d0a91;
+}
+
+.btn:hover {
+  border-color: #3d0a91;
+}
