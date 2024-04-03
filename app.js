@@ -18,7 +18,7 @@ const ExpressError = require("./utils/ExpressError");
 const User = require("./models/user");
 
 const userRoutes = require("./routes/users");
-const campgroundRoutes = require("./routes/campgrounds");
+const nationalParkRoutes = require("./routes/nationalParks");
 const reviewRoutes = require("./routes/reviews");
 //const dbUrl = process.env.DB_URL;
 const dbUrl = "mongodb://localhost:27017/yelp-camp";
@@ -132,7 +132,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", userRoutes);
-app.use("/campgrounds", campgroundRoutes);
+app.use("/nationalParks", nationalParkRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {

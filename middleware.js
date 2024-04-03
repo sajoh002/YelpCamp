@@ -1,5 +1,5 @@
-const { campgroundSchema, reviewSchema } = require("./schemas");
-const Campground = require("./models/campground");
+const { nationalParkSchema, reviewSchema } = require("./schemas");
+const NationalPark = require("./models/nationalPark");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError");
 
@@ -18,8 +18,8 @@ module.exports.storeReturnTo = (req, res, next) => {
   next();
 };
 
-module.exports.validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
+module.exports.validateNationalPark = (req, res, next) => {
+  const { error } = nationalParkSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(", ");
     throw new ExpressError(msg, 400);
@@ -30,10 +30,10 @@ module.exports.validateCampground = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
-  const campground = await Campground.findById(id);
-  if (!campground.author.equals(req.user._id)) {
+  const nationalPark = await NationalPark.findById(id);
+  if (!nationalPark.author.equals(req.user._id)) {
     req.flash("error", "You are not authorized to do that!");
-    return res.redirect(`/campgrounds/${campground._id}`);
+    return res.redirect(`/nationalParks/${nationalPark._id}`);
   }
   next();
 };
@@ -43,7 +43,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
   const review = await Review.findById(reviewId);
   if (!review.author.equals(req.user._id)) {
     req.flash("error", "You are not authorized to do that!");
-    return res.redirect(`/campgrounds/${id}`);
+    return res.redirect(`/nationalParks/${id}`);
   }
   next();
 };

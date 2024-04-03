@@ -2,7 +2,7 @@ mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
   container: "map",
   style: "mapbox://styles/mapbox/outdoors-v12",
-  center: campground.geometry.coordinates,
+  center: nationalPark.geometry.coordinates,
   zoom: 11,
 });
 
@@ -11,10 +11,8 @@ map.addControl(new mapboxgl.NavigationControl());
 const marker = new mapboxgl.Marker({
   color: "#3d0a91",
 })
-  .setLngLat(campground.geometry.coordinates)
+  .setLngLat(nationalPark.geometry.coordinates)
   .setPopup(
-    new mapboxgl.Popup({ offset: 25 }).setHTML(
-      `<h5>${campground.title}</h5><p>${campground.location}</p>`
-    )
+    new mapboxgl.Popup({ offset: 25 }).setHTML(`<h5>${nationalPark.title}</h5>`)
   )
   .addTo(map);

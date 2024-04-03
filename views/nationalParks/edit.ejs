@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
-  <h1 class="text-center">Edit Campground</h1>
+  <h1 class="text-center">Edit National Park</h1>
   <div class="col-md-6 offset-md-3">
     <form
-      action="/campgrounds/<%= campground._id %>?_method=PUT"
+      action="/nationalParks/<%= nationalPark._id %>?_method=PUT"
       method="POST"
       novalidate
       class="needs-validation"
@@ -14,9 +14,9 @@
           type="text"
           class="form-control"
           id="title"
-          name="campground[title]"
-          placeholder="Campground"
-          value="<%= campground.title %>"
+          name="nationalPark[title]"
+          placeholder="National Park"
+          value="<%= nationalPark.title %>"
           required
         />
         <label class="form-label" for="title">Title</label>
@@ -25,13 +25,13 @@
         <input
           type="text"
           class="form-control"
-          id="location"
-          name="campground[location]"
-          placeholder="Location"
-          value="<%= campground.location %>"
+          id="state"
+          name="nationalPark[state]"
+          placeholder="State"
+          value="<%= nationalPark.state %>"
           required
         />
-        <label class="form-label" for="location">Location</label>
+        <label class="form-label" for="state">State</label>
       </div>
       <div class="mb-3 input-group">
         <label class="input-group-text" for="image">Add Image(s)</label>
@@ -51,12 +51,12 @@
             class="form-control"
             aria-label="Amount (to the nearest dollar)"
             id="price"
-            name="campground[price]"
+            name="nationalPark[price]"
             placeholder="150"
-            value="<%= campground.price %>"
+            value="<%= nationalPark.price %>"
             required
           />
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Entrance Fee</label>
         </div>
         <span class="input-group-text">.00</span>
       </div>
@@ -64,17 +64,17 @@
         <textarea
           class="form-control"
           id="description"
-          name="campground[description]"
+          name="nationalPark[description]"
           placeholder="Description"
           style="height: 100px"
           required
         >
-          <%= campground.description %>
+          <%= nationalPark.description %>
         </textarea>
         <label class="form-label" for="description">Description</label>
       </div>
       <div class="mb-3">
-        <% campground.images.forEach((img, i) => { %>
+        <% nationalPark.images.forEach((img, i) => { %>
         <img
           crossorigin="anonymous"
           src="<%= img.thumbnail %>"
@@ -94,13 +94,13 @@
         <% }) %>
       </div>
       <div class="mb-3">
-        <button class="btn btn-outline-primary">Save Campground</button>
+        <button class="btn btn-outline-primary">Save National Park</button>
       </div>
     </form>
     <a
       class="btn btn-outline-secondary"
-      href="/campgrounds/<%= campground._id %>"
-      >Back to Campground</a
+      href="/nationalParks/<%= nationalPark._id %>"
+      >Back to National Park</a
     >
   </div>
 </div>
