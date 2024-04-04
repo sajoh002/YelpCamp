@@ -19,6 +19,7 @@ const User = require("./models/user");
 
 const userRoutes = require("./routes/users");
 const nationalParkRoutes = require("./routes/nationalParks");
+const hikeRoutes = require("./routes/hikes");
 const reviewRoutes = require("./routes/reviews");
 //const dbUrl = process.env.DB_URL;
 const dbUrl = "mongodb://localhost:27017/yelp-camp";
@@ -133,7 +134,8 @@ app.use((req, res, next) => {
 
 app.use("/", userRoutes);
 app.use("/nationalParks", nationalParkRoutes);
-app.use("/campgrounds/:id/reviews", reviewRoutes);
+app.use("/nationalParks/:id/hikes", hikeRoutes);
+app.use("/nationalParks/:id/hikes/:hikeId/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
   res.render("home");

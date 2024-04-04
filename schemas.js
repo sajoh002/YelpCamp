@@ -34,6 +34,17 @@ module.exports.nationalParkSchema = Joi.object({
   deleteImages: Joi.array(),
 });
 
+module.exports.hikeSchema = Joi.object({
+  hike: Joi.object({
+    title: Joi.string().required().escapeHTML(),
+    distance: Joi.number().required().min(0),
+    difficulty: Joi.string().required().escapeHTML(),
+    description: Joi.string().required().escapeHTML(),
+    nationalPark: Joi.string().required(),
+  }).required(),
+  deleteImages: Joi.array(),
+});
+
 module.exports.reviewSchema = Joi.object({
   review: Joi.object({
     rating: Joi.number().required().min(1).max(5),

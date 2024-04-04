@@ -1,5 +1,6 @@
-const { nationalParkSchema, reviewSchema } = require("./schemas");
+const { nationalParkSchema, reviewSchema, hikeSchema } = require("./schemas");
 const NationalPark = require("./models/nationalPark");
+const Hike = require("./models/hike");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError");
 
@@ -38,12 +39,33 @@ module.exports.isAuthor = async (req, res, next) => {
   next();
 };
 
+module.exports.validateHike = (req, res, next) => {
+  const { error } = hikeSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(", ");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.isHikeAuthor = async (req, res, next) => {
+  const { id, hikeId } = req.params;
+  const nationalPark = await NationalPark.findById(id);
+  const hike = await Hike.findById(hikeId);
+  if (!hike.author.equals(req.user._id)) {
+    req.flash("error", "You are not authorized to do that!");
+    return res.redirect(`/nationalParks/${nationalPark._id}/hikes/${hike._id}`);
+  }
+  next();
+};
+
 module.exports.isReviewAuthor = async (req, res, next) => {
-  const { id, reviewId } = req.params;
+  const { id, hikeId, reviewId } = req.params;
   const review = await Review.findById(reviewId);
   if (!review.author.equals(req.user._id)) {
     req.flash("error", "You are not authorized to do that!");
-    return res.redirect(`/nationalParks/${id}`);
+    return res.redirect(`/nationalParks/${id}/hikes/${hikeId}`);
   }
   next();
 };

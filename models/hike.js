@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Hike = require("./hike");
+const Review = require("./review");
 const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
@@ -13,7 +13,7 @@ ImageSchema.virtual("thumbnail").get(function () {
 
 const opts = { toJSON: { virtuals: true } };
 
-const NationalParkSchema = new Schema(
+const HikeSchema = new Schema(
   {
     title: String,
     images: [ImageSchema],
@@ -28,35 +28,39 @@ const NationalParkSchema = new Schema(
         required: true,
       },
     },
+    distance: Number,
+    difficulty: String,
     description: String,
-    state: String,
-    price: Number,
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    hikes: [
+    reviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Hike",
+        ref: "Review",
       },
     ],
+    nationalPark: {
+      type: Schema.Types.ObjectId,
+      ref: "NationalPark",
+    },
   },
   opts
 );
 
-NationalParkSchema.virtual("properties.popUpMarkup").get(function () {
-  return `<strong><a href="/nationalParks/${this._id}">${this.title}</a></strong>`;
+HikeSchema.virtual("properties.popUpMarkup").get(function () {
+  return `<strong><a href="/nationalParks/${this.nationalPark._id}/${this._id}">${this.title}</a></strong>`;
 });
 
-NationalParkSchema.post("findOneAndDelete", async function (doc) {
+HikeSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
-    await Hike.deleteMany({
+    await Review.deleteMany({
       _id: {
-        $in: doc.hikes,
+        $in: doc.reviews,
       },
     });
   }
 });
 
-module.exports = mongoose.model("NationalPark", NationalParkSchema);
+module.exports = mongoose.model("Hike", HikeSchema);
