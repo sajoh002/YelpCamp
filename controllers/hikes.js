@@ -13,7 +13,6 @@ module.exports.renderNewForm = async (req, res) => {
 
 module.exports.createHike = async (req, res, next) => {
   const nationalPark = await NationalPark.findById(req.params.id);
-  console.log(req.body.hike);
   const geoData = await geocoder
     .forwardGeocode({
       query: req.body.hike.title,
@@ -21,7 +20,6 @@ module.exports.createHike = async (req, res, next) => {
     })
     .send();
   const hike = new Hike(req.body.hike);
-  console.log(geoData.body.feature);
   hike.geometry = geoData.body.features[0].geometry;
   hike.images = req.files.map((f) => ({
     url: f.path,
