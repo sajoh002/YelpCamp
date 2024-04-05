@@ -50,7 +50,7 @@ const HikeSchema = new Schema(
 );
 
 HikeSchema.virtual("properties.popUpMarkup").get(function () {
-  return `<strong><a href="/nationalParks/${this.nationalPark._id}/${this._id}">${this.title}</a></strong>`;
+  return `<strong><a href="/nationalParks/${this.nationalPark._id}/hikes/${this._id}">${this.title}</a></strong>`;
 });
 
 HikeSchema.post("findOneAndDelete", async function (doc) {

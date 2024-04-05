@@ -15,7 +15,7 @@ module.exports.createHike = async (req, res, next) => {
   const nationalPark = await NationalPark.findById(req.params.id);
   const geoData = await geocoder
     .forwardGeocode({
-      query: req.body.hike.title,
+      query: `${req.body.hike.title}, ${nationalPark.title}`,
       limit: 1,
     })
     .send();

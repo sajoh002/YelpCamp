@@ -35,7 +35,14 @@ module.exports.createNationalPark = async (req, res, next) => {
 
 module.exports.showNationalPark = async (req, res) => {
   const { id } = req.params;
-  const nationalPark = await NationalPark.findById(id).populate("author");
+  const nationalPark = await NationalPark.findById(id)
+    .populate({
+      path: "hikes",
+      populate: {
+        path: "author",
+      },
+    })
+    .populate("author");
   if (!nationalPark) {
     req.flash("error", "Cannot find that National Park!");
     return res.redirect("/nationalParks/");

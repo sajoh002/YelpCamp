@@ -76,6 +76,11 @@
         Submitted by <%= hike.author.username %>
       </div>
     </div>
+    <a
+      href="/nationalParks/<%= hike.nationalPark._id %>"
+      class="btn btn-outline-primary"
+      >Back to <%= nationalPark.title %></a
+    >
   </div>
   <div class="col-6">
     <div id="map"></div>
