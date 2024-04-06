@@ -5,13 +5,66 @@ const { cloudinary } = require("../cloudinary");
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
+const states = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virgina",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+];
+
 module.exports.index = async (req, res) => {
   const nationalParks = await NationalPark.find({});
   res.render("nationalParks/index", { nationalParks });
 };
 
 module.exports.renderNewForm = (req, res) => {
-  res.render("nationalParks/new");
+  res.render("nationalParks/new", { states });
 };
 
 module.exports.createNationalPark = async (req, res, next) => {
@@ -57,7 +110,7 @@ module.exports.renderEditForm = async (req, res) => {
     req.flash("error", "Cannot find that National Park!");
     return res.redirect("/nationalParks/");
   }
-  res.render("nationalParks/edit", { nationalPark });
+  res.render("nationalParks/edit", { nationalPark, states });
 };
 
 module.exports.updateNationalPark = async (req, res) => {

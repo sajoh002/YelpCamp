@@ -21,15 +21,18 @@
         <label class="form-label" for="title">Title</label>
       </div>
       <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
+        <select
+          class="form-select"
+          aria-label="State select"
           id="state"
           name="nationalPark[state]"
-          placeholder="State"
-          required
-        />
-        <label class="form-label" for="state">State</label>
+        >
+          <option selected>Select a state...</option>
+          <% states.forEach((state, i) => { %>
+          <option value="<%= state %>"><%= state %></option>
+          <% }) %>
+        </select>
+        <label for="state">State</label>
       </div>
       <div class="mb-3 input-group">
         <label class="input-group-text" for="image">Upload Image(s)</label>
@@ -55,7 +58,15 @@
           />
           <label for="price" class="form-label">Entrance Fee</label>
         </div>
-        <span class="input-group-text">.00</span>
+        <select
+          class="form-select"
+          aria-label="Price per select"
+          id="pricePer"
+          name="nationalPark[pricePer]"
+        >
+          <option selected>Per Vehicle</option>
+          <option>Per Person</option>
+        </select>
       </div>
       <div class="mb-3 form-floating">
         <textarea

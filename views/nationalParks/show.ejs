@@ -1,7 +1,12 @@
 <% layout('layouts/boilerplate') %>
 <div id="cluster-map"></div>
-<div class="my-3">
-  <h1 class="text-center"><%= nationalPark.title %></h1>
+<div class="my-3 text-center">
+  <h1><%= nationalPark.title %></h1>
+  <h4 class="text-muted"><%= nationalPark.state %></h4>
+  <h5 class="text-muted">
+    $<%= nationalPark.price %> <%= nationalPark.pricePer %>
+  </h5>
+  <p class="lead"><%= nationalPark.description %></p>
   <div class="d-flex justify-content-center">
     <a
       class="btn btn-outline-primary"
@@ -48,6 +53,25 @@
   </div>
 </div>
 <% } %>
+<div class="d-flex justify-content-center gap-3 my-3">
+  <a href="/nationalParks/" class="btn btn-outline-primary"
+    >Back to All National Parks</a
+  >
+  <% if (currentUser && nationalPark.author.equals(currentUser._id)) { %>
+  <a
+    href="/nationalParks/<%= nationalPark._id %>/edit"
+    class="btn btn-outline-secondary"
+    >Edit</a
+  >
+  <form
+    class="d-inline"
+    action="/nationalParks/<%= nationalPark._id %>?_method=DELETE"
+    method="POST"
+  >
+    <button class="btn btn-outline-dark">Delete</button>
+  </form>
+  <% } %>
+</div>
 <script>
   const mapToken = "<%- process.env.MAPBOX_TOKEN %>";
   const hikes = {features: <%- JSON.stringify(nationalPark.hikes) %>}

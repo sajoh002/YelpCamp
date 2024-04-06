@@ -30,7 +30,8 @@ const NationalParkSchema = new Schema(
     },
     description: String,
     state: String,
-    price: Number,
+    price: String,
+    pricePer: String,
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",

@@ -27,7 +27,8 @@ const Joi = BaseJoi.extend(extension);
 module.exports.nationalParkSchema = Joi.object({
   nationalPark: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    price: Joi.number().required().min(0),
+    price: Joi.string().required().escapeHTML(),
+    pricePer: Joi.string().required().escapeHTML(),
     state: Joi.string().required().escapeHTML(),
     description: Joi.string().required().escapeHTML(),
   }).required(),

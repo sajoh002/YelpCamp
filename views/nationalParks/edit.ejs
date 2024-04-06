@@ -22,16 +22,23 @@
         <label class="form-label" for="title">Title</label>
       </div>
       <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
+        <select
+          class="form-select"
+          aria-label="State select"
           id="state"
           name="nationalPark[state]"
-          placeholder="State"
-          value="<%= nationalPark.state %>"
-          required
-        />
-        <label class="form-label" for="state">State</label>
+        >
+          <option>Select a state...</option>
+          <% states.forEach((state, i) => { %>
+          <option
+            selected="<%= nationalPark.state === state ? 'selected' : '' %>"
+            value="<%= state %>"
+          >
+            <%= state %>
+          </option>
+          <% }) %>
+        </select>
+        <label for="state">State</label>
       </div>
       <div class="mb-3 input-group">
         <label class="input-group-text" for="image">Add Image(s)</label>
@@ -58,7 +65,23 @@
           />
           <label for="price" class="form-label">Entrance Fee</label>
         </div>
-        <span class="input-group-text">.00</span>
+        <select
+          class="form-select"
+          aria-label="Price per select"
+          id="pricePer"
+          name="nationalPark[pricePer]"
+        >
+          <option
+            selected="<%= nationalPark.pricePer === 'Per Vehicle' ? 'selected' : '' %>"
+          >
+            Per Vehicle
+          </option>
+          <option
+            selected="<%= nationalPark.pricePer === 'Per Person' ? 'selected' : '' %>"
+          >
+            Per Person
+          </option>
+        </select>
       </div>
       <div class="mb-3 form-floating">
         <textarea
