@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Hike = require("./hike");
+const Sight = require("./sight");
 const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
@@ -36,10 +36,10 @@ const NationalParkSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    hikes: [
+    sights: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Hike",
+        ref: "Sight",
       },
     ],
   },
@@ -52,9 +52,9 @@ NationalParkSchema.virtual("properties.popUpMarkup").get(function () {
 
 NationalParkSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
-    await Hike.deleteMany({
+    await Sight.deleteMany({
       _id: {
-        $in: doc.hikes,
+        $in: doc.sights,
       },
     });
   }

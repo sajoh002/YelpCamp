@@ -35,8 +35,8 @@ module.exports.nationalParkSchema = Joi.object({
   deleteImages: Joi.array(),
 });
 
-module.exports.hikeSchema = Joi.object({
-  hike: Joi.object({
+module.exports.sightSchema = Joi.object({
+  sight: Joi.object({
     title: Joi.string().required().escapeHTML(),
     distance: Joi.number().required().min(0),
     difficulty: Joi.string().required().escapeHTML(),

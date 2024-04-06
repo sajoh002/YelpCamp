@@ -10,20 +10,20 @@
   <div class="d-flex justify-content-center">
     <a
       class="btn btn-outline-primary"
-      href="/nationalParks/<%= nationalPark._id %>/hikes/new"
-      >Add a Hike</a
+      href="/nationalParks/<%= nationalPark._id %>/sights/new"
+      >Add a Sight</a
     >
   </div>
 </div>
-<% for (let hike of nationalPark.hikes) { %>
+<% for (let sight of nationalPark.sights) { %>
 <div class="card mb-3">
   <div class="row">
     <div class="col-md-4">
-      <% if (hike.images.length) { %>
+      <% if (sight.images.length) { %>
       <img
         crossorigin="anonymous"
         class="img-fluid"
-        src="<%= hike.images[0].url %>"
+        src="<%= sight.images[0].url %>"
         alt=""
       />
       <% } else { %>
@@ -37,16 +37,16 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title"><%= hike.title %></h5>
-        <p class="card-text"><%= hike.description %></p>
+        <h5 class="card-title"><%= sight.title %></h5>
+        <p class="card-text"><%= sight.description %></p>
         <p class="card-text">
           <small class="text-muted"><%= nationalPark.title %></small>
         </p>
         <a
           class="btn btn-outline-secondary"
-          href="/nationalParks/<%= nationalPark._id %>/hikes/<%= hike._id %>"
+          href="/nationalParks/<%= nationalPark._id %>/sights/<%= sight._id %>"
         >
-          View <%= hike.title %>
+          View <%= sight.title %>
         </a>
       </div>
     </div>
@@ -74,7 +74,7 @@
 </div>
 <script>
   const mapToken = "<%- process.env.MAPBOX_TOKEN %>";
-  const hikes = {features: <%- JSON.stringify(nationalPark.hikes) %>}
+  const sights = {features: <%- JSON.stringify(nationalPark.sights) %>}
   const nationalPark = <%- JSON.stringify(nationalPark.geometry.coordinates) %>
 </script>
 <script src="/javascript/showPageMap.js"></script>

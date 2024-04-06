@@ -13,7 +13,7 @@ ImageSchema.virtual("thumbnail").get(function () {
 
 const opts = { toJSON: { virtuals: true } };
 
-const HikeSchema = new Schema(
+const SightSchema = new Schema(
   {
     title: String,
     images: [ImageSchema],
@@ -28,6 +28,7 @@ const HikeSchema = new Schema(
         required: true,
       },
     },
+    type: String,
     distance: Number,
     difficulty: String,
     description: String,
@@ -49,11 +50,11 @@ const HikeSchema = new Schema(
   opts
 );
 
-HikeSchema.virtual("properties.popUpMarkup").get(function () {
-  return `<strong><a href="/nationalParks/${this.nationalPark._id}/hikes/${this._id}">${this.title}</a></strong>`;
+SightSchema.virtual("properties.popUpMarkup").get(function () {
+  return `<strong><a href="/nationalParks/${this.nationalPark._id}/sights/${this._id}">${this.title}</a></strong>`;
 });
 
-HikeSchema.post("findOneAndDelete", async function (doc) {
+SightSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
     await Review.deleteMany({
       _id: {
@@ -63,4 +64,4 @@ HikeSchema.post("findOneAndDelete", async function (doc) {
   }
 });
 
-module.exports = mongoose.model("Hike", HikeSchema);
+module.exports = mongoose.model("Sight", SightSchema);

@@ -28,14 +28,9 @@
           id="state"
           name="nationalPark[state]"
         >
-          <option>Select a state...</option>
+          <option selected>Select a state...</option>
           <% states.forEach((state, i) => { %>
-          <option
-            selected="<%= nationalPark.state === state ? 'selected' : '' %>"
-            value="<%= state %>"
-          >
-            <%= state %>
-          </option>
+          <option value="<%= state %>" id="<%= state %>"><%= state %></option>
           <% }) %>
         </select>
         <label for="state">State</label>
@@ -71,16 +66,8 @@
           id="pricePer"
           name="nationalPark[pricePer]"
         >
-          <option
-            selected="<%= nationalPark.pricePer === 'Per Vehicle' ? 'selected' : '' %>"
-          >
-            Per Vehicle
-          </option>
-          <option
-            selected="<%= nationalPark.pricePer === 'Per Person' ? 'selected' : '' %>"
-          >
-            Per Person
-          </option>
+          <option id="vehicle">Per Vehicle</option>
+          <option id="person">Per Person</option>
         </select>
       </div>
       <div class="mb-3 form-floating">
@@ -127,3 +114,7 @@
     >
   </div>
 </div>
+<script>
+  const nationalPark = <%- JSON.stringify(nationalPark) %>
+</script>
+<script src="/javascript/nationalParkEdit.js"></script>

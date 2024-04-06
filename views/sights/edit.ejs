@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
-  <h1 class="text-center">New Hike</h1>
+  <h1 class="text-center">Edit <%= sight.title %></h1>
   <div class="col-md-6 offset-md-3">
     <form
-      action="/nationalParks/<%= nationalPark._id %>/hikes"
+      action="/nationalParks/<%= nationalPark._id %>/sights/<%= sight._id %>?_method=PUT"
       method="POST"
       novalidate
       class="needs-validation"
@@ -14,9 +14,10 @@
           type="text"
           class="form-control"
           id="title"
-          name="hike[title]"
-          placeholder="Hike"
+          name="sight[title]"
+          placeholder="Sight"
           required
+          value="<%= sight.title %>"
         />
         <label class="form-label" for="title">Title</label>
       </div>
@@ -30,27 +31,33 @@
           multiple
         />
       </div>
-      <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Amount (to the nearest dollar)"
-          id="distance"
-          name="hike[distance]"
-          placeholder="150"
-          required
-        />
-        <label for="distance" class="form-label">Distance</label>
+      <div class="input-group mb-3">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Distance"
+            id="distance"
+            name="sight[distance]"
+            placeholder="150"
+            value="<%= sight.distance %>"
+            required
+          />
+          <label for="distance" class="form-label">Distance</label>
+        </div>
+        <span class="input-group-text">miles</span>
       </div>
       <div class="mb-3 form-floating">
         <textarea
           class="form-control"
           id="description"
-          name="hike[description]"
+          name="sight[description]"
           placeholder="Description"
           style="height: 100px"
           required
-        ></textarea>
+        >
+          <%= sight.description %></textarea
+        >
         <label class="form-label" for="description">Description</label>
       </div>
       <div class="my-3 form-floating">
@@ -58,8 +65,9 @@
           type="text"
           class="form-control"
           id="difficulty"
-          name="hike[difficulty]"
+          name="sight[difficulty]"
           placeholder="Difficulty"
+          value="<%= sight.difficulty %>"
           required
         />
         <label class="form-label" for="difficulty">Difficulty</label>
@@ -69,7 +77,7 @@
           type="text"
           class="form-control"
           id="nationalPark"
-          name="hike[nationalPark]"
+          name="sight[nationalPark]"
           placeholder="NationalPark"
           required
           value="<%= nationalPark._id %>"
@@ -77,13 +85,33 @@
         <label class="form-label" for="nationalPark">National Park</label>
       </div>
       <div class="mb-3">
-        <button class="btn btn-outline-primary">Add Hike</button>
+        <% sight.images.forEach((img, i) => { %>
+        <img
+          crossorigin="anonymous"
+          src="<%= img.thumbnail %>"
+          class="img-thumbnail"
+          alt=""
+        />
+        <div class="form-check-inline mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="<%= img.filename %>"
+            id="image-<%= i %>"
+            name="deleteImages[]"
+          />
+          <label class="form-check-label" for="image-<%= i %>"> Delete? </label>
+        </div>
+        <% }) %>
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-outline-primary">Save Sight</button>
       </div>
     </form>
     <a
       class="btn btn-outline-secondary"
       href="/nationalParks/<%= nationalPark._id %>"
-      >Return to <%= nationalPark.title %></a
+      >Cancel</a
     >
   </div>
 </div>

@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
   <div class="col-6">
-    <div id="hikeImages" class="carousel slide" data-bs-ride="true">
+    <div id="sightImages" class="carousel slide" data-bs-ride="true">
       <div class="carousel-indicators">
-        <% hike.images.forEach((image, i) => { %>
+        <% sight.images.forEach((image, i) => { %>
         <button
           type="button"
-          data-bs-target="#hikeImages"
+          data-bs-target="#sightImages"
           data-bs-slide-to="<%= i %>"
           class="<%= i === 0 ? 'active' : '' %>"
           aria-current="<%= i === 0 ? 'true' : '' %>"
@@ -15,7 +15,7 @@
         <% }) %>
       </div>
       <div class="carousel-inner">
-        <% hike.images.forEach((image, i) => { %>
+        <% sight.images.forEach((image, i) => { %>
         <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
           <img
             crossorigin="anonymous"
@@ -26,11 +26,11 @@
         </div>
         <% }) %>
       </div>
-      <% if (hike.images.length > 1) { %>
+      <% if (sight.images.length > 1) { %>
       <button
         class="carousel-control-prev"
         type="button"
-        data-bs-target="#hikeImages"
+        data-bs-target="#sightImages"
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -39,7 +39,7 @@
       <button
         class="carousel-control-next"
         type="button"
-        data-bs-target="#hikeImages"
+        data-bs-target="#sightImages"
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -49,23 +49,23 @@
     </div>
     <div class="card text-center mb-3">
       <div class="card-body">
-        <h5 class="card-title"><%= hike.title %></h5>
-        <p class="card-text"><%= hike.description %></p>
+        <h5 class="card-title"><%= sight.title %></h5>
+        <p class="card-text"><%= sight.description %></p>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item text-muted"><%= hike.distance %> miles</li>
-        <li class="list-group-item"><%= hike.difficulty %></li>
+        <li class="list-group-item text-muted"><%= sight.distance %> miles</li>
+        <li class="list-group-item"><%= sight.difficulty %></li>
       </ul>
-      <% if (currentUser && hike.author.equals(currentUser._id)) { %>
+      <% if (currentUser && sight.author.equals(currentUser._id)) { %>
       <div class="card-body">
         <a
-          href="/nationalParks/<%= hike.nationalPark._id %>/hikes/<%= hike._id %>/edit"
+          href="/nationalParks/<%= sight.nationalPark._id %>/sights/<%= sight._id %>/edit"
           class="card-link btn btn-outline-secondary"
           >Edit</a
         >
         <form
           class="d-inline"
-          action="/nationalParks/<%= hike.nationalPark._id %>/hikes/<%= hike._id %>?_method=DELETE"
+          action="/nationalParks/<%= sight.nationalPark._id %>/sights/<%= sight._id %>?_method=DELETE"
           method="POST"
         >
           <button class="btn btn-outline-dark">Delete</button>
@@ -73,11 +73,11 @@
       </div>
       <% } %>
       <div class="card-footer text-muted">
-        Submitted by <%= hike.author.username %>
+        Submitted by <%= sight.author.username %>
       </div>
     </div>
     <a
-      href="/nationalParks/<%= hike.nationalPark._id %>"
+      href="/nationalParks/<%= sight.nationalPark._id %>"
       class="btn btn-outline-primary"
       >Back to <%= nationalPark.title %></a
     >
@@ -88,7 +88,7 @@
     <h2>Leave a Review</h2>
     <form
       class="mb-3 needs-validation"
-      action="/nationalParks/<%= hike.nationalPark._id %>/<%= hike._id %>/reviews"
+      action="/nationalParks/<%= sight.nationalPark._id %>/sights/<%= sight._id %>/reviews"
       method="POST"
       novalidate
     >
@@ -148,7 +148,7 @@
         <button class="btn btn-outline-primary">Submit</button>
       </div>
     </form>
-    <% } %> <% for (let review of hike.reviews) { %>
+    <% } %> <% for (let review of sight.reviews) { %>
     <div class="card mb-3">
       <div class="card-header">
         <p
@@ -163,7 +163,7 @@
         <% if (currentUser && review.author.equals(currentUser._id)) { %>
         <li class="list-group-item text-center">
           <form
-            action="/nationalParks/<%= hike.nationalPark._id %>/<%= hike._id %>/reviews/<%= review._id %>?_method=DELETE"
+            action="/nationalParks/<%= sight.nationalPark._id %>/sights/<%= sight._id %>/reviews/<%= review._id %>?_method=DELETE"
             method="POST"
           >
             <button class="btn btn-outline-danger btn-sm">Delete</button>
@@ -171,8 +171,8 @@
         </li>
         <% } %>
       </ul>
-      <div class="card-footer text-muted">
-        Submitted by <%= review.author.username %> 2 days ago
+      <div class="card-footer text-muted text-center">
+        Submitted by <%= review.author.username %>
       </div>
     </div>
     <% } %>
@@ -180,6 +180,6 @@
 </div>
 <script>
   const mapToken = "<%- process.env.MAPBOX_TOKEN %>";
-  const hike = <%- JSON.stringify(hike) %>
+  const sight = <%- JSON.stringify(sight) %>
 </script>
-<script src="/javascript/hikeShowPageMap.js"></script>
+<script src="/javascript/sightShowPageMap.js"></script>

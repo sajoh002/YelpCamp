@@ -1,6 +1,6 @@
-const { nationalParkSchema, reviewSchema, hikeSchema } = require("./schemas");
+const { nationalParkSchema, reviewSchema, sightSchema } = require("./schemas");
 const NationalPark = require("./models/nationalPark");
-const Hike = require("./models/hike");
+const Sight = require("./models/sight");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError");
 
@@ -39,8 +39,8 @@ module.exports.isAuthor = async (req, res, next) => {
   next();
 };
 
-module.exports.validateHike = (req, res, next) => {
-  const { error } = hikeSchema.validate(req.body);
+module.exports.validateSight = (req, res, next) => {
+  const { error } = sightSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(", ");
     throw new ExpressError(msg, 400);
@@ -49,23 +49,25 @@ module.exports.validateHike = (req, res, next) => {
   }
 };
 
-module.exports.isHikeAuthor = async (req, res, next) => {
-  const { id, hikeId } = req.params;
+module.exports.isSightAuthor = async (req, res, next) => {
+  const { id, sightId } = req.params;
   const nationalPark = await NationalPark.findById(id);
-  const hike = await Hike.findById(hikeId);
-  if (!hike.author.equals(req.user._id)) {
+  const sight = await Sight.findById(sightId);
+  if (!sight.author.equals(req.user._id)) {
     req.flash("error", "You are not authorized to do that!");
-    return res.redirect(`/nationalParks/${nationalPark._id}/hikes/${hike._id}`);
+    return res.redirect(
+      `/nationalParks/${nationalPark._id}/sights/${sight._id}`
+    );
   }
   next();
 };
 
 module.exports.isReviewAuthor = async (req, res, next) => {
-  const { id, hikeId, reviewId } = req.params;
+  const { id, sightId, reviewId } = req.params;
   const review = await Review.findById(reviewId);
   if (!review.author.equals(req.user._id)) {
     req.flash("error", "You are not authorized to do that!");
-    return res.redirect(`/nationalParks/${id}/hikes/${hikeId}`);
+    return res.redirect(`/nationalParks/${id}/sights/${sightId}`);
   }
   next();
 };
