@@ -38,12 +38,17 @@ module.exports.nationalParkSchema = Joi.object({
 module.exports.sightSchema = Joi.object({
   sight: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    distance: Joi.number().required().min(0),
-    difficulty: Joi.string().required().escapeHTML(),
+    distance: Joi.number().optional().min(0),
+    difficulty: Joi.string().optional().escapeHTML(),
     description: Joi.string().required().escapeHTML(),
     nationalPark: Joi.string().required(),
+    type: Joi.string().required().escapeHTML(),
   }).required(),
   deleteImages: Joi.array(),
+  coordinates: Joi.object({
+    latitude: Joi.string().required().escapeHTML(),
+    longitude: Joi.string().required().escapeHTML(),
+  }),
 });
 
 module.exports.reviewSchema = Joi.object({

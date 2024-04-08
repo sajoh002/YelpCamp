@@ -1,117 +1,190 @@
 <% layout('layouts/boilerplate') %>
-<div class="row">
+<div class="my-3">
   <h1 class="text-center">Edit <%= sight.title %></h1>
-  <div class="col-md-6 offset-md-3">
-    <form
-      action="/nationalParks/<%= nationalPark._id %>/sights/<%= sight._id %>?_method=PUT"
-      method="POST"
-      novalidate
-      class="needs-validation"
-      enctype="multipart/form-data"
-    >
-      <div class="my-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          name="sight[title]"
-          placeholder="Sight"
-          required
-          value="<%= sight.title %>"
-        />
-        <label class="form-label" for="title">Title</label>
-      </div>
-      <div class="mb-3 input-group">
-        <label class="input-group-text" for="image">Upload Image(s)</label>
-        <input
-          type="file"
-          name="image"
-          id="image"
-          class="form-control"
-          multiple
-        />
-      </div>
-      <div class="input-group mb-3">
-        <div class="form-floating">
+  <form
+    action="/nationalParks/<%= nationalPark._id %>/sights/<%= sight._id %>?_method=PUT"
+    method="POST"
+    novalidate
+    class="needs-validation"
+    enctype="multipart/form-data"
+  >
+    <div class="row">
+      <div class="col-6">
+        <div class="my-3 form-floating">
           <input
             type="text"
             class="form-control"
-            aria-label="Distance"
-            id="distance"
-            name="sight[distance]"
-            placeholder="150"
-            value="<%= sight.distance %>"
+            id="title"
+            name="sight[title]"
+            placeholder="Sight"
             required
+            value="<%= sight.title %>"
           />
-          <label for="distance" class="form-label">Distance</label>
+          <label class="form-label" for="title">Title</label>
         </div>
-        <span class="input-group-text">miles</span>
-      </div>
-      <div class="mb-3 form-floating">
-        <textarea
-          class="form-control"
-          id="description"
-          name="sight[description]"
-          placeholder="Description"
-          style="height: 100px"
-          required
-        >
-          <%= sight.description %></textarea
-        >
-        <label class="form-label" for="description">Description</label>
-      </div>
-      <div class="my-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="difficulty"
-          name="sight[difficulty]"
-          placeholder="Difficulty"
-          value="<%= sight.difficulty %>"
-          required
-        />
-        <label class="form-label" for="difficulty">Difficulty</label>
-      </div>
-      <div class="my-3 form-floating" hidden>
-        <input
-          type="text"
-          class="form-control"
-          id="nationalPark"
-          name="sight[nationalPark]"
-          placeholder="NationalPark"
-          required
-          value="<%= nationalPark._id %>"
-        />
-        <label class="form-label" for="nationalPark">National Park</label>
-      </div>
-      <div class="mb-3">
-        <% sight.images.forEach((img, i) => { %>
-        <img
-          crossorigin="anonymous"
-          src="<%= img.thumbnail %>"
-          class="img-thumbnail"
-          alt=""
-        />
-        <div class="form-check-inline mb-3">
+        <div class="mb-3 form-floating">
           <input
-            class="form-check-input"
-            type="checkbox"
-            value="<%= img.filename %>"
-            id="image-<%= i %>"
-            name="deleteImages[]"
+            type="text"
+            class="form-control"
+            id="nationalParkName"
+            name="nationalParkName"
+            placeholder="National Park"
+            disabled
+            value="<%= nationalPark.title %>"
           />
-          <label class="form-check-label" for="image-<%= i %>"> Delete? </label>
+          <label class="form-label" for="nationalParkName">National Park</label>
         </div>
-        <% }) %>
+        <div class="row my-3">
+          <div class="col-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="latitude"
+                name="coordinates[latitude]"
+                placeholder="Latitude"
+                readonly
+                value="<%= sight.geometry.coordinates[1] %>"
+              />
+              <label class="form-label" for="latitude">Latitude</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="longitude"
+                name="coordinates[longitude]"
+                placeholder="Longitude"
+                readonly
+                value="<%= sight.geometry.coordinates[0] %>"
+              />
+              <label class="form-label" for="longitude">Longitude</label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 input-group">
+          <label class="input-group-text" for="image">Upload Image(s)</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            class="form-control"
+            multiple
+          />
+        </div>
+        <div class="mb-3 form-floating">
+          <select
+            class="form-select"
+            aria-label="Type select"
+            id="type"
+            name="sight[type]"
+          >
+            <option>Select a type...</option>
+            <% types.forEach((type, i) => { %>
+            <option value="<%= type %>" id="<%= type %>"><%= type %></option>
+            <% }) %>
+          </select>
+          <label for="type">Type</label>
+        </div>
+        <div class="mb-3 form-floating">
+          <textarea
+            class="form-control"
+            id="description"
+            name="sight[description]"
+            placeholder="Description"
+            style="height: 100px"
+            required
+          >
+          <%= sight.description %></textarea
+          >
+          <label class="form-label" for="description">Description</label>
+        </div>
+        <div class="input-group mb-3 d-none" id="distanceInput">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Distance"
+              id="distance"
+              name="sight[distance]"
+              placeholder="150"
+              value="<%= sight.distance %>"
+              required
+            />
+            <label for="distance" class="form-label">Distance</label>
+          </div>
+          <span class="input-group-text">miles</span>
+        </div>
+        <div class="mb-3 form-floating d-none" id="difficultyInput">
+          <select
+            class="form-select"
+            aria-label="Difficulty select"
+            id="difficulty"
+            name="sight[difficulty]"
+          >
+            <option selected>Select a difficulty...</option>
+            <% difficulty.forEach((level, i) => { %>
+            <option id="<%= level %>" value="<%= level %>"><%= level %></option>
+            <% }) %>
+          </select>
+          <label for="difficulty">Difficulty</label>
+        </div>
+        <div class="my-3 form-floating" hidden>
+          <input
+            type="text"
+            class="form-control"
+            id="nationalPark"
+            name="sight[nationalPark]"
+            placeholder="NationalPark"
+            required
+            value="<%= nationalPark._id %>"
+          />
+          <label class="form-label" for="nationalPark">National Park</label>
+        </div>
+        <div class="mb-3">
+          <% sight.images.forEach((img, i) => { %>
+          <img
+            crossorigin="anonymous"
+            src="<%= img.thumbnail %>"
+            class="img-thumbnail"
+            alt=""
+          />
+          <div class="form-check-inline mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="<%= img.filename %>"
+              id="image-<%= i %>"
+              name="deleteImages[]"
+            />
+            <label class="form-check-label" for="image-<%= i %>">
+              Delete?
+            </label>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="col-6">
+        <h2>Location</h2>
+        <div id="map"></div>
+        <p class="text-muted">Drag marker to change location.</p>
       </div>
       <div class="mb-3">
         <button class="btn btn-outline-primary">Save Sight</button>
       </div>
-    </form>
-    <a
-      class="btn btn-outline-secondary"
-      href="/nationalParks/<%= nationalPark._id %>"
-      >Cancel</a
-    >
-  </div>
+    </div>
+  </form>
+  <a
+    class="btn btn-outline-secondary"
+    href="/nationalParks/<%= nationalPark._id %>/sights/<%= sight._id %>"
+    >Cancel</a
+  >
 </div>
+<script>
+  const mapToken = "<%- process.env.MAPBOX_TOKEN %>";
+  const sight = <%- JSON.stringify(sight) %>
+</script>
+<script src="/javascript/editSight.js"></script>
+<script src="/javascript/editSightMap.js"></script>

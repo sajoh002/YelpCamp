@@ -1,89 +1,160 @@
 <% layout('layouts/boilerplate') %>
-<div class="row">
+<div class="my-3">
   <h1 class="text-center">New Sight</h1>
-  <div class="col-md-6 offset-md-3">
-    <form
-      action="/nationalParks/<%= nationalPark._id %>/sights"
-      method="POST"
-      novalidate
-      class="needs-validation"
-      enctype="multipart/form-data"
-    >
-      <div class="my-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          name="sight[title]"
-          placeholder="Sight"
-          required
-        />
-        <label class="form-label" for="title">Title</label>
+  <form
+    action="/nationalParks/<%= nationalPark._id %>/sights"
+    method="POST"
+    novalidate
+    class="needs-validation"
+    enctype="multipart/form-data"
+  >
+    <div class="row">
+      <div class="col-6">
+        <div class="my-3 form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="sight[title]"
+            placeholder="Sight"
+            required
+          />
+          <label class="form-label" for="title">Title</label>
+        </div>
+        <div class="mb-3 form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="nationalParkName"
+            name="nationalParkName"
+            placeholder="National Park"
+            disabled
+            value="<%= nationalPark.title %>"
+          />
+          <label class="form-label" for="nationalParkName">National Park</label>
+        </div>
+        <div class="row my-3">
+          <div class="col-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="latitude"
+                name="coordinates[latitude]"
+                placeholder="Latitude"
+                readonly
+              />
+              <label class="form-label" for="latitude">Latitude</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="longitude"
+                name="coordinates[longitude]"
+                placeholder="Longitude"
+                readonly
+              />
+              <label class="form-label" for="longitude">Longitude</label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 input-group">
+          <label class="input-group-text" for="image">Upload Image(s)</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            class="form-control"
+            multiple
+          />
+        </div>
+        <div class="mb-3 form-floating">
+          <select
+            class="form-select"
+            aria-label="Type select"
+            id="type"
+            name="sight[type]"
+          >
+            <option selected value="">Select a type...</option>
+            <% types.forEach((type, i) => { %>
+            <option value="<%= type %>"><%= type %></option>
+            <% }) %>
+          </select>
+          <label for="type">Type</label>
+        </div>
+        <div class="mb-3 form-floating">
+          <textarea
+            class="form-control"
+            id="description"
+            name="sight[description]"
+            placeholder="Description"
+            style="height: 100px"
+            required
+          ></textarea>
+          <label class="form-label" for="description">Description</label>
+        </div>
+        <div class="input-group mb-3 d-none" id="distanceInput">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Distance of hike (in miles)"
+              id="distance"
+              name="sight[distance]"
+              placeholder="150"
+            />
+            <label for="distance" class="form-label">Distance</label>
+          </div>
+          <span class="input-group-text">miles</span>
+        </div>
+        <div class="mb-3 form-floating d-none" id="difficultyInput">
+          <select
+            class="form-select"
+            aria-label="Difficulty select"
+            id="difficulty"
+            name="sight[difficulty]"
+          >
+            <option selected value="">Select a difficulty...</option>
+            <% difficulty.forEach((level, i) => { %>
+            <option value="<%= level %>"><%= level %></option>
+            <% }) %>
+          </select>
+          <label for="difficulty">Difficulty</label>
+        </div>
+        <div class="my-3 form-floating" hidden>
+          <input
+            type="text"
+            class="form-control"
+            id="nationalPark"
+            name="sight[nationalPark]"
+            placeholder="NationalPark"
+            value="<%= nationalPark._id %>"
+          />
+          <label class="form-label" for="nationalPark">National Park</label>
+        </div>
       </div>
-      <div class="mb-3 input-group">
-        <label class="input-group-text" for="image">Upload Image(s)</label>
-        <input
-          type="file"
-          name="image"
-          id="image"
-          class="form-control"
-          multiple
-        />
-      </div>
-      <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Amount (to the nearest dollar)"
-          id="distance"
-          name="sight[distance]"
-          placeholder="150"
-          required
-        />
-        <label for="distance" class="form-label">Distance</label>
-      </div>
-      <div class="mb-3 form-floating">
-        <textarea
-          class="form-control"
-          id="description"
-          name="sight[description]"
-          placeholder="Description"
-          style="height: 100px"
-          required
-        ></textarea>
-        <label class="form-label" for="description">Description</label>
-      </div>
-      <div class="my-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="difficulty"
-          name="sight[difficulty]"
-          placeholder="Difficulty"
-          required
-        />
-        <label class="form-label" for="difficulty">Difficulty</label>
-      </div>
-      <div class="my-3 form-floating" hidden>
-        <input
-          type="text"
-          class="form-control"
-          id="nationalPark"
-          name="sight[nationalPark]"
-          placeholder="NationalPark"
-          required
-          value="<%= nationalPark._id %>"
-        />
-        <label class="form-label" for="nationalPark">National Park</label>
+      <div class="col-6 my-3">
+        <h2>Location</h2>
+        <div id="map"></div>
+        <p class="text-muted">Drag marker to select location.</p>
       </div>
       <div class="mb-3">
         <button class="btn btn-outline-primary">Add Sight</button>
       </div>
-    </form>
-    <a
-      class="btn btn-outline-secondary"
-      href="/nationalParks/<%= nationalPark._id %>"
-      >Return to <%= nationalPark.title %></a
-    >
-  </div>
+    </div>
+  </form>
+  <a
+    class="btn btn-outline-secondary"
+    href="/nationalParks/<%= nationalPark._id %>"
+    >Return to <%= nationalPark.title %></a
+  >
 </div>
+<script>
+  const mapToken = "<%- process.env.MAPBOX_TOKEN %>";
+  const nationalPark = <%- JSON.stringify(nationalPark) %>
+</script>
+<script src="/javascript/addSightMap.js"></script>
+<script src="/javascript/addSight.js"></script>

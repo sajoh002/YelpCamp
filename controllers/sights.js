@@ -1,26 +1,35 @@
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const Sight = require("../models/sight");
 const NationalPark = require("../models/nationalPark");
 const { cloudinary } = require("../cloudinary");
 
-const mapBoxToken = process.env.MAPBOX_TOKEN;
-const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+const types = [
+  "Campground",
+  "Hike/Trail",
+  "Lake",
+  "Lodge",
+  "Mountain",
+  "Ranger Station",
+  "Visitor Center",
+  "Loop/Drive",
+];
+
+const difficulty = ["Easy", "Moderate", "Hard"];
 
 module.exports.renderNewForm = async (req, res) => {
   const nationalPark = await NationalPark.findById(req.params.id);
-  res.render("sights/new", { nationalPark });
+  res.render("sights/new", { nationalPark, types, difficulty });
 };
 
 module.exports.createSight = async (req, res, next) => {
   const nationalPark = await NationalPark.findById(req.params.id);
-  const geoData = await geocoder
-    .forwardGeocode({
-      query: `${req.body.sight.title}, ${nationalPark.title}`,
-      limit: 1,
-    })
-    .send();
   const sight = new Sight(req.body.sight);
-  sight.geometry = geoData.body.features[0].geometry;
+  sight.geometry = {
+    type: "Point",
+    coordinates: [
+      req.body.coordinates.longitude,
+      req.body.coordinates.latitude,
+    ],
+  };
   sight.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
@@ -59,7 +68,7 @@ module.exports.renderEditForm = async (req, res) => {
     req.flash("error", "Cannot find that Sight!");
     return res.redirect(`/nationalParks/${id}`);
   }
-  res.render("sights/edit", { nationalPark, sight });
+  res.render("sights/edit", { nationalPark, sight, types, difficulty });
 };
 
 module.exports.updateSight = async (req, res) => {

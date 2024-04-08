@@ -50,11 +50,15 @@
     <div class="card text-center mb-3">
       <div class="card-body">
         <h5 class="card-title"><%= sight.title %></h5>
-        <p class="card-text"><%= sight.description %></p>
+        <p class="card-text"><%= nationalPark.title %></p>
       </div>
       <ul class="list-group list-group-flush">
+        <li class="list-group-item"><%= sight.description %></li>
+        <li class="list-group-item"><%= sight.type %></li>
+        <% if (sight.type === 'Hike') { %>
         <li class="list-group-item text-muted"><%= sight.distance %> miles</li>
         <li class="list-group-item"><%= sight.difficulty %></li>
+        <% } %>
       </ul>
       <% if (currentUser && sight.author.equals(currentUser._id)) { %>
       <div class="card-body">
