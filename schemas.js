@@ -38,8 +38,8 @@ module.exports.nationalParkSchema = Joi.object({
 module.exports.sightSchema = Joi.object({
   sight: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    distance: Joi.number().optional().min(0),
-    difficulty: Joi.string().optional().escapeHTML(),
+    distance: Joi.number().optional().allow(null, ""),
+    difficulty: Joi.string().optional().allow(null, "").escapeHTML(),
     description: Joi.string().required().escapeHTML(),
     nationalPark: Joi.string().required(),
     type: Joi.string().required().escapeHTML(),
