@@ -21,8 +21,8 @@ const userRoutes = require("./routes/users");
 const nationalParkRoutes = require("./routes/nationalParks");
 const sightRoutes = require("./routes/sights");
 const reviewRoutes = require("./routes/reviews");
-//const dbUrl = process.env.DB_URL;
-const dbUrl = "mongodb://localhost:27017/yelp-camp";
+const dbUrl = process.env.DB_URL;
+//const dbUrl = "mongodb://localhost:27017/yelp-camp";
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
@@ -53,7 +53,7 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    //secure: true,
+    secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
