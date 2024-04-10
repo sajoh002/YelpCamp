@@ -60,6 +60,7 @@ const states = [
 
 module.exports.index = async (req, res) => {
   const nationalParks = await NationalPark.find({});
+  nationalParks.sort((a, b) => a.title.localeCompare(b.title));
   res.render("nationalParks/index", { nationalParks });
 };
 
