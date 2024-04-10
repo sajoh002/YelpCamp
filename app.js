@@ -13,7 +13,7 @@ const passport = require("passport");
 const passportLocal = require("passport-local");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo")(session);
 const ExpressError = require("./utils/ExpressError");
 const User = require("./models/user");
 
@@ -33,12 +33,10 @@ db.once("open", () => {
 
 const app = express();
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
+const store = new MongoStore({
+  url: dbUrl,
+  secret: "placeholderForSecret",
   touchAfter: 24 * 60 * 60,
-  crypto: {
-    secret: "placeholderForSecret",
-  },
 });
 
 store.on("error", function (e) {
