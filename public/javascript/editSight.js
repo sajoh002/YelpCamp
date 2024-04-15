@@ -4,7 +4,7 @@ const difficulty = document.querySelector("#difficultyInput");
 console.log(sight.type);
 
 window.addEventListener("load", (event) => {
-  if (sight.type === "Hike") {
+  if (sight.type.includes("Hike")) {
     distance.classList.remove("d-none");
     difficulty.classList.remove("d-none");
   }
@@ -13,7 +13,7 @@ window.addEventListener("load", (event) => {
 });
 
 type.addEventListener("change", (event) => {
-  if (event.target.value === "Hike") {
+  if (event.target.value.includes("Hike")) {
     distance.classList.remove("d-none");
     difficulty.classList.remove("d-none");
   } else {
